@@ -4,18 +4,41 @@
 #
 # === Parameters
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
+# [name]
+#   Username that this nvm will be installed under
 #
-class nvm (
-  $package_name = $::nvm::params::package_name,
-  $service_name = $::nvm::params::service_name,
-) inherits ::nvm::params {
+define nvm (
+  $versions = ['stable'],
+  $nvm_version = '0.20.0',
+  $default_version = 'stable',
+) {
 
-  # validate parameters here
+  validate_array($versions)
+  validate_re($default_version, '^([0-9.]+|stable|unstable|system)$')
 
-  class { '::nvm::install': } ->
-  class { '::nvm::config': } ~>
-  class { '::nvm::service': } ->
-  Class['::nvm']
+  case $::osfamily {
+    'Debian', 'Redhat', 'Amazon': {
+      #supported
+    }
+    default: {
+      fail("${::operatingsystem} not supported")
+    }
+  }
+
+  $acceptable_versions=concat($versions, ['system'])
+
+  if ! member($acceptable_versions, $default_version){
+    fail("default_version(${default_version}) must be in the list of installed versions (${versions}) or system")
+  }
+
+  $user_version_installs = regsubst($versions, '^', "${name}:")
+
+  ::nvm::install { $name:
+    version => $nvm_version,
+  } ->
+  ::nvm::install::version { $user_version_installs: } ->
+  ::nvm::default { $name:
+    version => $default_version
+  }
+
 }
