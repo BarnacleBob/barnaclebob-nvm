@@ -14,9 +14,8 @@ define nvm::install::version (
   $version = $name_parts[1]
 
   exec { "install node ${version} for ${user}":
-    command  => "source \$HOME/.nvm/nvm.sh && nvm install ${version}",
-    unless   => "source \$HOME/.nvm/nvm.sh && nvm ls ${version}",
-    user     => $user,
-    provider => shell,
+    command => "/bin/bash -c '. ~/.nvm/nvm.sh && nvm install ${version}'",
+    unless  => "/bin/bash -c '. ~/.nvm/nvm.sh && nvm ls ${version}'",
+    user    => $user,
   }
 }

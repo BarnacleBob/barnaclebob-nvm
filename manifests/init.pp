@@ -9,7 +9,7 @@
 #
 define nvm (
   $versions = ['stable'],
-  $nvm_version = '0.20.0',
+  $nvm_version = '0.26.1',
   $default_version = 'stable',
 ) {
 

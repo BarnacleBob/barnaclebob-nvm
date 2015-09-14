@@ -14,9 +14,8 @@ describe 'nvm::install::version' do
 
       it { should contain_exec("install node #{version} for #{user}") }
       it { should contain_exec("install node #{version} for #{user}").with(
-        'command'  => "source $HOME/.nvm/nvm.sh && nvm install #{version}",
+        'command'  => "/bin/bash -c '. ~/.nvm/nvm.sh && nvm install #{version}'",
         'user'     => user,
-        'provider' => 'shell',
       )}
     end
   end

@@ -19,7 +19,7 @@ describe 'nvm::install' do
 
       it { should contain_exec("install nvm for user #{user}") }
       it { should contain_exec("install nvm for user #{user}").with(
-        'command' => "/usr/bin/env curl #{installer_url} | /usr/bin/env bash",
+        'command' => "/bin/bash -c 'export NVM_DIR=~/.nvm; /usr/bin/curl #{installer_url} | /bin/bash -x'",
         'user'    => user,
       )}
     end

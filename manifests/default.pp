@@ -8,9 +8,8 @@ define nvm::default (
   validate_re($version, '^([0-9.]+|stable|unstable|system)$')
 
   exec { "set default node version to ${version} for ${name}":
-    command  => "source \$HOME/.nvm/nvm.sh && nvm alias default ${version}",
-    unless   => "source \$HOME/.nvm/nvm.sh && nvm alias default | grep -q 'default -> ${version}'",
-    user     => $name,
-    provider => shell,
+    command => "/bin/bash -c 'source ~/.nvm/nvm.sh && nvm alias default ${version}'",
+    unless  => "/bin/bash -c 'source ~/.nvm/nvm.sh && nvm alias default | grep -q \"default -> ${version}\"'",
+    user    => $name,
   }
 }

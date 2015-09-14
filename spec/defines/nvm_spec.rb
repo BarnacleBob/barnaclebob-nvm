@@ -16,7 +16,7 @@ describe 'nvm' do
 
       it { should contain_nvm__install(user) }
       it { should contain_nvm__install(user).that_comes_before("Nvm::Install::Version[#{user}:stable]") }
-      it { should contain_nvm__install(user).with_version('0.20.0') }
+      it { should contain_nvm__install(user).with_version('0.26.1') }
 
       it { should contain_nvm__install__version("#{user}:stable") }
       it { should contain_nvm__install__version("#{user}:stable").that_comes_before("Nvm::Default[#{user}]") }

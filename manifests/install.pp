@@ -11,8 +11,8 @@ define nvm::install (
   $installer_url = "https://raw.githubusercontent.com/creationix/nvm/v${version}/install.sh"
 
   exec { "install nvm for user ${name}":
-    command  => "/usr/bin/env curl ${installer_url} | /usr/bin/env bash",
-    unless   => "test -e \$HOME/.nvm/nvm.sh && source \$HOME/.nvm/nvm.sh && test '$(nvm --version)' = ${version}",
+    command  => "/bin/bash -c 'export NVM_DIR=~/.nvm; /usr/bin/curl ${installer_url} | /bin/bash -x'",
+    unless   => "/bin/bash -c 'test -e ~/.nvm/nvm.sh && source ~/.nvm/nvm.sh && test \"\$(0.20.0)\" = \"${version}\"'",
     user     => $name,
     provider => shell,
   }

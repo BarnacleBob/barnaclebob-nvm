@@ -17,9 +17,8 @@ describe 'nvm::default' do
 
       it { should contain_exec("set default node version to #{version} for #{user}") }
       it { should contain_exec("set default node version to #{version} for #{user}").with(
-        'command'  => "source $HOME/.nvm/nvm.sh && nvm alias default #{version}",
+        'command'  => "/bin/bash -c 'source ~/.nvm/nvm.sh && nvm alias default #{version}'",
         'user'     => user,
-        'provider' => 'shell',
       )}
     end
   end
