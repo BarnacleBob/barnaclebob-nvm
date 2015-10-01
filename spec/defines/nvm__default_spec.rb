@@ -6,9 +6,11 @@ describe 'nvm::default' do
       user = ENV['USER']
       version = '0.10.0'
       let(:title) { user }
-      let(:params) {{
-        :version => version
-      }}
+      let(:params) do
+        {
+          :version => version
+        }
+      end
 
       it { should compile.with_all_deps }
 
@@ -16,10 +18,12 @@ describe 'nvm::default' do
       it { should contain_nvm__default(user).with_version(version) }
 
       it { should contain_exec("set default node version to #{version} for #{user}") }
-      it { should contain_exec("set default node version to #{version} for #{user}").with(
-        'command'  => "/bin/bash -c 'source ~/.nvm/nvm.sh && nvm alias default #{version}'",
-        'user'     => user,
-      )}
+      it do 
+        should contain_exec("set default node version to #{version} for #{user}").with(
+          'command'  => "/bin/bash -c 'source ~/.nvm/nvm.sh && nvm alias default #{version}'",
+          'user'     => user,
+        )
+      end
     end
   end
   context 'input validation' do
@@ -27,9 +31,11 @@ describe 'nvm::default' do
       user = ENV['USER']
       version = 'asdf'
       let(:title) { user }
-      let(:params) {{
-        :version => version
-      }}
+      let(:params) do
+        {
+          :version => version
+        }
+      end
       
       it "Should raise error about version not matching a version string" do
         expect { should create_nvm__default(user) }.to raise_error(Puppet::Error, /"asdf" does not match/)

@@ -13,48 +13,53 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves. This is your 30 second elevator pitch for your module. Consider including OS/Puppet version it works with.       
-
-## Module Description
-
-If applicable, this section should have a brief description of the technology the module integrates with and what that integration enables. This section should answer the questions: "What does this module *do*?" and "Why would I use it?"
-
-If your module has a range of functionality (installation, configuration, management, etc.) this is the time to mention it.
-
-## Setup
-
-### What nvm affects
-
-* A list of files, packages, services, or operations that the module will alter, impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form. 
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, etc.), mention it here. 
-
-### Beginning with nvm
-
-The very basic steps needed for a user to get the module up and running. 
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you may wish to include an additional section here: Upgrading (For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+This module will install nvm and use it to install nodejs versions on a per user basis.  This allows you to have multiple nvm installations per system such as using one user/nvm install per application running.
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing the fancy stuff with your module here. 
+This module requires the user you want to install nvm for to already exist.
+
+```
+user{'bob':
+  ensure     => present,
+  managehome => true,
+}
+
+nvm{'bob':
+  versions        => ["10.40", "stable", "12.6"]
+  default_version => "stable"
+}
+```
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module. This section should include all of the under-the-hood workings of your module so people know what the module is touching on their system but don't need to mess with things. (We are working on automating this section!)
+### Public Defines
+* [`nvm`](#define-nvm)
+
+### Private defines
+* [`nvm::install`](#define-nvminstall)
+* [`nvm::install::version`](#define-nvminstall)
+* [`nvm::install::default`](#define-nvmdefault)
+
+#### Define: `nvm`
+
+Manages nvm for specified user.
+
+##### Parameters (all optional)
+
+* `versions`: Specifies the versions of nodejs to install for this user.  Valid options: an array of strings. Default: ['stable'].
+
+* `default_version`: Specifies the default version of nodejs that nvm will use.  Valid options: a string from the `versions` parameter.  Default: ['stable'].
+
+* `nvm_version`: Specifies the version of nvm to install. Valid options: a string.  Default: '0.26.1'.
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Tested on:
+* Ubuntu 12.04
+* Ubuntu 14.04
+* Debian 6
+* Debian 7
+* Centos 6
+* Centos 7
 
-## Development
-
-Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You may also add any additional sections you feel are necessary or important to include here. Please use the `## ` header. 

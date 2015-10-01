@@ -12,7 +12,7 @@ define nvm::install (
 
   exec { "install nvm for user ${name}":
     command  => "/bin/bash -c 'export NVM_DIR=~/.nvm; /usr/bin/curl ${installer_url} | /bin/bash -x'",
-    unless   => "/bin/bash -c 'test -e ~/.nvm/nvm.sh && source ~/.nvm/nvm.sh && test \"\$(0.20.0)\" = \"${version}\"'",
+    unless   => "/bin/bash -c 'test -e ~/.nvm/nvm.sh'",
     user     => $name,
     provider => shell,
   }

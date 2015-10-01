@@ -4,7 +4,7 @@ source        'https://github.com/BarnacleBob/barnaclebob-nvm'
 author        'barnaclebob'
 license       'Apache 2.0'
 summary       'Module to manage multiple nodejs versions per user using nvm'
-description   ''
+description   'Module to manage multiple nodejs versions per user using nvm'
 project_page  'https://github.com/BarnacleBob/barnaclebob-nvm'
 
 dependency 'puppetlabs/stdlib'

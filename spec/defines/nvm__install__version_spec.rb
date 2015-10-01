@@ -13,10 +13,12 @@ describe 'nvm::install::version' do
       it { should contain_nvm__install__version("#{user}:#{version}") }
 
       it { should contain_exec("install node #{version} for #{user}") }
-      it { should contain_exec("install node #{version} for #{user}").with(
-        'command'  => "/bin/bash -c '. ~/.nvm/nvm.sh && nvm install #{version}'",
-        'user'     => user,
-      )}
+      it do
+        should contain_exec("install node #{version} for #{user}").with(
+          'command'  => "/bin/bash -c '. ~/.nvm/nvm.sh && nvm install #{version}'",
+          'user'     => user,
+        )
+      end
     end
   end
   context 'input validation' do

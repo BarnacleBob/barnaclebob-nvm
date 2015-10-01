@@ -6,9 +6,11 @@ describe 'nvm' do
       user = ENV['USER']
       let(:title) { user }
       let(:params) {{ }}
-      let(:facts) {{
-        :osfamily => 'Redhat',
-      }}
+      let(:facts) do
+        {
+          :osfamily => 'Redhat',
+        }
+      end
 
       it { should compile.with_all_deps }
 
@@ -30,17 +32,21 @@ describe 'nvm' do
     describe "nvm with parameters" do
       user = ENV['USER']
       let(:title) { user }
-      let(:params) {{
-        :nvm_version => '9.9.9',
-        :versions    => [
-          '0.1.0',
-          '0.2.0',
-        ],
-        :default_version => '0.2.0',
-      }}
-      let(:facts) {{
-        :osfamily => 'Redhat',
-      }}
+      let(:params) do
+        {
+          :nvm_version => '9.9.9',
+          :versions    => [
+            '0.1.0',
+            '0.2.0',
+          ],
+          :default_version => '0.2.0',
+        }
+      end
+      let(:facts) do
+        {
+          :osfamily => 'Redhat',
+        }
+      end
 
       it { should compile.with_all_deps }
 
@@ -66,12 +72,16 @@ describe 'nvm' do
     describe "nvm with invalid default version" do
       user = ENV['USER']
       let(:title) { user }
-      let(:params) {{
-        :default_version => 'not_acceptable_version',
-      }}
-      let(:facts) {{
-        :osfamily => 'Redhat',
-      }}
+      let(:params) do
+        {
+          :default_version => 'not_acceptable_version',
+        }
+      end
+      let(:facts) do
+        {
+          :osfamily => 'Redhat',
+        }
+      end
       
       it "Should raise error about default version not matching acceptable version formats" do 
         expect { should create_nvm(user) }.to raise_error(Puppet::Error, /"not_acceptable_version" does not match "[^"]+"/)
@@ -80,12 +90,16 @@ describe 'nvm' do
     describe "nvm with invalid versions parameter" do
       user = ENV['USER']
       let(:title) { user }
-      let(:params) {{
-        :versions => "this is not valid"
-      }}
-      let(:facts) {{
-        :osfamily => 'Redhat',
-      }}
+      let(:params) do
+        {
+          :versions => "this is not valid"
+        }
+      end
+      let(:facts) do
+        {
+          :osfamily => 'Redhat',
+        }
+      end
       
       it "Should raise error about being passed a string and not an array" do 
         expect { should create_nvm(user) }.to raise_error(Puppet::Error, /"this is not valid" is not an Array./)
@@ -95,13 +109,17 @@ describe 'nvm' do
       describe "nvm with default version #{default_version}" do
         user = ENV['USER']
         let(:title) { user }
-        let(:params) {{
-          :versions => ['0.1.0','stable','unstable'],
-          :default_version => default_version,
-        }}
-        let(:facts) {{
-          :osfamily => 'Redhat',
-        }}
+        let(:params) do
+          {
+            :versions => ['0.1.0','stable','unstable'],
+            :default_version => default_version,
+          }
+        end
+        let(:facts) do
+          {
+            :osfamily => 'Redhat',
+          }
+        end
 
         it { should compile.with_all_deps }
         if default_version != 'system'
@@ -114,12 +132,16 @@ describe 'nvm' do
     describe "nvm with default version not in installed versions" do
       user = ENV['USER']
       let(:title) { user }
-      let(:params) {{
-        :default_version => '0.9.0',
-      }}
-      let(:facts) {{
-        :osfamily => 'Redhat',
-      }}
+      let(:params) do
+        {
+          :default_version => '0.9.0',
+        }
+      end
+      let(:facts) do
+        {
+          :osfamily => 'Redhat',
+        }
+      end
       
       it "Should raise error about default version not in versions list" do 
         expect { should create_nvm(user) }.to raise_error(Puppet::Error, /default_version\(0.9.0\) must be in the list of installed versions \(stable\) or system/)
@@ -133,9 +155,11 @@ describe 'nvm' do
         user = ENV['USER']
         let(:title) { user }
         let(:params) {{ }}
-        let(:facts) {{
-          :osfamily => osfamily,
-        }}
+        let(:facts) do
+          {
+            :osfamily => osfamily,
+          }
+        end
 
         it { should compile.with_all_deps }
 
@@ -149,10 +173,12 @@ describe 'nvm' do
       user = ENV['USER']
       let(:title) { user }
       let(:params) {{ }}
-      let(:facts) {{
-        :osfamily        => 'Solaris',
-        :operatingsystem => 'Nexenta',
-      }}
+      let(:facts) do
+        {
+          :osfamily        => 'Solaris',
+          :operatingsystem => 'Nexenta',
+        }
+      end
 
       it "Should raise error about unsupported os" do 
         expect { should create_nvm(user) }.to raise_error(Puppet::Error, /Nexenta not supported/)

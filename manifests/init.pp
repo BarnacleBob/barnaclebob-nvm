@@ -38,7 +38,7 @@ define nvm (
   } ->
   ::nvm::install::version { $user_version_installs: } ->
   ::nvm::default { $name:
-    version => $default_version
+    version => $default_version,
   }
 
 }
