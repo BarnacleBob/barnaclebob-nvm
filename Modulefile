@@ -1,5 +1,5 @@
 name          'barnaclebob-nvm'
-version       '0.1.0'
+version       '1.0.0'
 source        'https://github.com/BarnacleBob/barnaclebob-nvm'
 author        'barnaclebob'
 license       'Apache 2.0'
